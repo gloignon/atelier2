@@ -4,7 +4,6 @@
 # guillaume.loignon@umontreal.ca
 # Février 2019
 
-
 #---- Bon à savoir ----
 
 # Pour expérimenter avec vos propres fichiers:
