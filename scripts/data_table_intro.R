@@ -4,6 +4,10 @@
 # guillaume.loignon@umontreal.ca
 # Février 2019
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d3f13debe5cc365df3bfff24883375e7171626db
 #---- Bon à savoir ----
 
 # Pour expérimenter avec vos propres fichiers:
