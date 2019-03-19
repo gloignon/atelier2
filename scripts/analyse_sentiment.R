@@ -5,7 +5,7 @@ library(tidyverse) #toujours pratique, ici on utilise son package stringr
 library(genius) #pour les paroles de chanson
 library(wordcloud) #pour le nuage de concept 
 
-content_categories <- c("VERB", "NOUN", "PROPN", "ADJ") #utilisé quand on filtre le lexique
+content_categories <- c("VERB", "NOUN", "PROPN", "ADJ") #utilisé quand on filtre les lexiques
 
 #lit tous les fichiers txt d'un dossier et les retourne dans un format prêt à
 #être analysé par udpipe
