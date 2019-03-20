@@ -13,8 +13,8 @@
 #     https://www.datacamp.com/community/tutorials/importing-data-r-part-two
 #
 
-# Rappels: * data.table est un type de structure de données qui modifie data frame
-#          * le tidyverse est une collection de packages
+# Rappels: * le tidyverse est une collection de packages
+#          * data.table est un type de structure de données qui modifie data frame
 #          * data.table et tidyverse sont des "paradigmes" en R, mais ils sont compatibles!
 #
 # Feuille de triche data.table: https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf
@@ -22,15 +22,20 @@
 library("data.table")
 library(tidyverse) #nous allons faire quelques comparaisons de syntaxe
 library(tictoc) #pour ceux et celles qui aiment chronométrer la performance de leur code
+    #comment? on ajoute la commande tic() avant le code et toc() après le code
+    # et on roule le code (incluant le tic et le toc) d'un seul coup
 
 #---- convertir ses données en data.table ----
-load("data/faketucky.rda")
+# Scénario typique: je veux utiliser des fonctionnalités de data.table mais mes données sont en data.frame.
+
+load("data/faketucky.rda") #ouverture, jeu de données écoles secondaires
+
 is.data.table(faketucky) #vérification: FALSE
 is.data.frame(faketucky) #vérification: TRUE!
 
-  #1ère méthode: copy() et setDT()  plus rapide
-dt.faketucky <- copy(faketucky)
-setDT(dt.faketucky)
+  #1ère méthode: copy() et setDT()
+dt.faketucky <- copy(faketucky) #recopie les données de faketucky dans un nouveau dataset
+setDT(dt.faketucky) #et on demande à R de considérer ce dataset comme un objet data.table
 
   #2e méthode: mon.dt <- data.table(mon.df) moins rapide
 dt.faketucky <- data.table(faketucky)
@@ -39,12 +44,32 @@ dt.faketucky <- data.table(faketucky)
   # une copie explicitement avec copy()
   # Faire ceci peut entrainer des résultats innatendus:
   
-mon.df <- mtcars        # mauvaise
-mon.dt <- setDT(mon.df) #   méthode
-is.data.table(mon.df)   #     ne pas faire!
-rm(mon.dt) #plus besoin
-rm(mon.df) #plus besoin
-
+# À éviter:
+  mon.df <- mtcars      
+  mon.sous.df <- mon.df[1:10 , ]
+  mon.dt <- mon.df      
+  mon.dt <- setDT(mon.df) #ne pas faire ça
+   # et conséquences quand on le fait quand même...
+  is.data.table(mon.df)  
+  is.data.table(mon.sous.df) 
+  rm(mon.sous.df) #plus besoin
+  rm(mon.df)
+  mon.df <- mtcars #je vais chercher des données neuves...
+  is.data.table(mon.df) #pas moyen de m'en débarasser!
+  is.data.table(mtcars) #c'est remonté jusqu'à la source!!
+  
+  #autre exemple, adapté depuis la documentation de copy()
+  mon.autre.dt <- data.table(iris)
+  noms <- names(mon.autre.dt)
+  noms
+  mon.autre.dt[, sentBon := "Oui"]
+  noms #note: c'est peut-être le résultat qu'on souhaitait, peut-être pas!
+  
+# setDT() sans copy() préalable? Oui, notamment si:
+# * on n'a pas besoin de garder une copie en data.frame
+# * très gros jeu de données
+# * les conséquences de la "contamination" ne nuisent pas au projet
+  
 #---- Sélectionner des données avec data.table ou le tidyverse ----
 View(dt.faketucky)
 

@@ -11,7 +11,6 @@
 # Mars 2019
 # guillaume.loignon@umontreal.ca
 
-
 library(lavaan) #pour l'essentiel de notre démo
 library(semPlot) #on veut aussi des graphiques
 
@@ -101,4 +100,4 @@ semPaths(fit,intercepts=FALSE) #dessine le graphe, requiert package semPlot
 outfile <- tempfile(fileext=".out")
 download.file("http://www.statmodel.com/usersguide/chap5/ex5.2.out",outfile)
 # Plot model:
-semPaths(outfile)
+semPaths(outfile) #requiert MPlus et MPlusAutomation
