@@ -8,7 +8,7 @@
 library("data.table")
 library(pscl) #pour le pseudo-R2
 
-#---- régression linéaire  ----
+#---- Régression linéaire  ----
 
 # Syntaxe de base:
 # lm(data=mes.donnees, var.dep ~ var.indep.1 + var.indep.2 * var.indep.3 etc etc etc )
