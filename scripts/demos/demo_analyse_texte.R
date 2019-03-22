@@ -1,8 +1,6 @@
-library(readr) #pour ouvrir les txt
 library(udpipe)
 library("data.table")
-library(tidyverse) #toujours pratique, ici on utilise son package stringr
-library(genius) #pour les paroles de chanson
+library(tidyverse) #toujours pratique, ici on utilise ses packages stringr et readr
 library(wordcloud) #pour le nuage de concept 
 
 content_categories <- c("VERB", "NOUN", "PROPN", "ADJ") #utilisé quand on filtre les lexiques

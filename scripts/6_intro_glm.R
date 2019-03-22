@@ -22,6 +22,34 @@ plot(modele1) #sorties graphiques fréquemment employées pour diagnostiquer le 
 # Consigne: faites un modèle multivarié visant à expliquer la note en philo 101.
 # Vous pouvez utiliser tout ce qui est dans le jeu de données
 
+
+
+
+# Solution plus bas...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 modele2 <- lm( data=dt.cegep.large, philo101 ~ MGS * moyNoteSpec)
 summary(modele2) #et on affiche les résultats
 
@@ -30,7 +58,7 @@ modele3 <- lm( data=dt.cegep.large, philo101 ~ MGS * Programme )
 summary(modele3) #R a fait une régression pour chaque niveau de la variable catégorielle Programmes
 plot(modele3)
 
-# Prédiction avec un modèle linéaire
+#---- Prédiction avec un modèle linéaire ----
 roger <- data.table ( #On invente Roger Tremblay, on nouvel étudiant
   nom="Tremblay, Roger",
   Programme="Tech. humaines",
@@ -52,6 +80,29 @@ predict.lm(modele3, newdata=roger, type="terms" ) #va afficher les termes du mod
 #     en formation spécifique (colonne moyNoteSpec) à partir des données dont vous disposez. Cette
 #     prédiction est-elle fiable?
 
+
+
+
+
+
+
+
+
+
+
+
+
+# Solution plus bas...
+
+
+
+
+
+
+
+
+
+
 modele4 <- lm( data=dt.cegep.large, moyNoteSpec ~ MGS + Programme + philo101 )
 summary(modele4)
 
@@ -64,7 +115,7 @@ ursula <- data.table (
 predict.lm(modele4, newdata=ursula, type="response" ) #va afficher la note prédite en philo101
 predict.lm(modele4, newdata=ursula, type="terms" ) #va afficher les termes du modèle
 
-#---- régression logistique ----
+#---- Régression logistique ----
   #Données de simulation concernant des élèves ayant suivi (ou pas) un cours de renforcement.
 load("data/sim_renfo.rda")
 
@@ -83,6 +134,30 @@ ggplot(dt.sim.renfo, aes(x=NotePre, y=NotePost, color=condition)) +
 #
 #   - La moyenne au pré-test est-elle équivalente entre les deux groupes? Utilisez un test
 #     statistique pour répondre.
+
+
+
+
+
+
+
+
+
+
+
+
+# Solution plus bas...
+
+
+
+
+
+
+
+
+
+
+
 
 
 t.test(data=dt.sim.renfo, NotePost ~ condition) #on explore le lien entre la condition (renfo/témoin) 
@@ -113,7 +188,8 @@ pR2(modele.log.2)
 # Attention avec la rég logistique: l'effet des VI ne s'exprime pas de manière constante (linéaire) 
 # sur la variable dépendante. Dans cet exemple, la condition semble peu contribuer au score en
 # en post-test quand on regarde les pseudo-R2, mais un examen plus approfondi pourrait montrer autre
-# chose. J'ai fait une démo pour illustrer ce principe, elle est dans ./script/demo/demo_pred.logit.R
+# chose. 
+# J'ai fait une démo pour illustrer ce principe, elle est dans ./script/demo/demo_pred.logit.R
 
 # Pour les "best practices" en régression logistique, voir ce livre:
 # https://us.sagepub.com/en-us/nam/best-practices-in-logistic-regression/book239211
