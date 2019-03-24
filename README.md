@@ -1,4 +1,4 @@
-# atelier2
+# Aller plus loin avec R
 Atelier sur R pour le griémétic, 2e partie
 http://griemetic.ca
 
