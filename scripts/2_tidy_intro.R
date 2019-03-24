@@ -144,7 +144,7 @@ mon.tableau.synthese
 ## À VOTRE TOUR!  ----
 # 
 # - En vous inspirant de l'exemple synthèse, et en une seule commande:
-#     1. Récupérez les données du tableau gss_cat (inclus dans R).
+#     1. Récupérez les données du tableau gss_cat (inclus dans la librairie tidyverse).
 #     2. Éliminez les répondants ayant des valeurs manquantes
 #     3. Sélectionnez les individus divorcés ou séparés (colonne marital, valeurs 
 #        Divorced ou Separated).

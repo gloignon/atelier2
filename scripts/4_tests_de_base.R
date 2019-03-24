@@ -137,7 +137,7 @@ compar.anova <- anova(anova1, anova2)
 compar.anova
 
 # À VOTRE TOUR ----:
-#   Pour le dataset gss_cat (inclus dans R par défaut),
+#   Pour le dataset gss_cat (inclus dans la librairie tidyverse),
 #   - produisez avec aov() deux modèles dont la variable dépendante sera tvhours,
 #   - comparez les deux modèles avec anova()
 #
