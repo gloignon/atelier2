@@ -57,6 +57,7 @@ ma.nouvelle.matrice[2] # affiche la 2e valeur
 # À VOTRE TOUR:
 #
 # - Créez un vecteur mon.vecteur avec les nombres de 1 à 100
+#
 # - Créez une matrice ma.matrice de dimension 10 x 10 à partir de mon.vecteur 
 
 # Changer une matrice en data.frame
@@ -65,6 +66,15 @@ is.data.frame(df.test)  # va afficher TRUE
 df.test # il manque les noms de colonnes
 colnames(df.test) <- c("colA", "colB", "colC")
 df.test
+
+#   Note: les objets data.frame ont des noms de rangées (rownames) mais
+#         il n'est pas recommandé des les utiliser. Il est préférable
+#         de faire une colonne pour l'identifiant plutôt que d'employer
+#         le nom de la rangée pour ce faire. D'ailleurs, les structures
+#         de données avancées comme les tableaux tibble et data.frame n'ont
+#         pas de rownames.
+#         Voir https://www.perfectlyrandom.org/2015/06/16/never-trust-the-row-names-of-a-dataframe-in-R/
+#         
 
 # Créer un data.frame à partir de zéro
   # remarquez l'utilisation du symbole = 
