@@ -3,32 +3,36 @@
 #
 # Adapté de diverses sources par G Loignon
 # guillaume.loignon@umontreal.ca
-# Dernière révision: février 2019
+# Dernière révision: octobre 2019
 
-library(MASS) #on charge le package MASS, un petit bijou de fonctions et de données d'exemple!
+library("MASS") #on charge le package MASS, un petit bijou de fonctions et de données d'exemple!
 
-# ---- Test du chi carré ------------------------------------------------------------------------
+# ---- 1. Test du chi carré ------------------------------------------------------------------------
 
 # voir http://www.r-tutor.com/elementary-statistics/goodness-fit/chi-squared-test-independence
 
 data(survey)  # charge le dataset "survey", qui est inclus dans la librairie MASS
 head(survey)  # coup d'oeil à nos données
+View(survey)  # affichage des données dans une fenêtre (RStudio)
 
-tbl <- table(survey$Smoke, survey$Exer == "Freq",
+tbl <- table(survey$Smoke,
+             survey$Exer == "Freq",
              dnn = c("Fumeur", "ExerciceFreq")) #conversion en tableau de contingence
 tbl  # affichons cette merveille.
 
 chisq.test(tbl) # le test du chi-2 en tant que tel
 
 # Autre exemple tiré de http://www.sthda.com/english/wiki/chi-square-test-of-independence-in-r
-housetasks <- read.delim("http://www.sthda.com/sthda/RDoc/data/housetasks.txt", row.names = 1)
-housetasks #valeurs observées
+housetasks <-
+  read.delim("http://www.sthda.com/sthda/RDoc/data/housetasks.txt",
+             row.names = 1)  # requiert une connexion à Internet
+housetasks  # valeurs observées
 mon.test.du.chi2 <- chisq.test(housetasks)
 mon.test.du.chi2
 val.attendues <- round(mon.test.du.chi2$expected)  # valeurs attendues, arrondies
 
 
-#---- Test t ----------------------------------------------------------------------------------------
+#---- 2. Test t ----------------------------------------------------------------------------------------
 
 #voir http://www.r-tutor.com/elementary-statistics/inference-about-two-populations/population-mean-between-two-independent-samples
 
@@ -44,33 +48,35 @@ head(mtcars)  # la colonne am indique le type de ransmission
 
 # 1) On sélectionne le mpg des voitures automatiques
 automatiques <- mtcars[mtcars$am == 1, "mpg"]
-head(automatiques) #ça marche, j'ai sélectionné juste le mpg des voitures automatiques
+head(automatiques)  # j'ai sélectionné juste le mpg des voitures automatiques
 
 # 2) On sélectionne le mpg des voitures manuelles
 manuelles <- mtcars[mtcars$am != 1, "mpg"] #j'utilise ! pour faire la négation de mon vecteur
 
 # 3) On fait le test t
 t.test(automatiques, manuelles)
-# moyenne des automatiques: 24.39 mpg
-# moyenne des manuelleS: 17.15 mpg
-# intervale de confiance: la différence entre les deux est située entre 3.21 et 11.28 mpg
+  # moyenne des automatiques: 24.39 mpg
+  # moyenne des manuelleS: 17.15 mpg
+  # intervale de confiance: la différence entre les deux est située entre 3.21 et 11.28 mpg
 
 # 2e méthode: notation par formule
 t.test(data=mtcars, mpg ~ am) #une seule ligne! :)
   #group 0 = manuelle; group 1 = automatique
 
-# Pour le test de Bartlett: bartlett.test(mtcars$mpg ~ mtcars$am) dans le package stats
-# Et le test de Levene? Utilisez la fonction leveneTest() dans le package car
+  # Pour le test de Bartlett? bartlett.test(mtcars$mpg ~ mtcars$am) dans le package stats
+  # Et le test de Levene? Utilisez la fonction leveneTest() dans le package car
+  # Ou encore mieux: demandez à Sébastien quels tests utiliser! :)
   
-#---- ANOVA ------------------------------------------------------------------------------------
+#---- 3. ANOVA --------------------------------------------------------------
 
 # En R de base, l'ANOVA se fait habituellement avec la fonction aov().
 
 # Application de l'ANOVA à 1 et plusieurs variables indépendantes.
-# Comme dans le livre de Howell, on va utiliser le dataset d'Eysenk (1994) 
-# voir http://www.statsci.org/data/general/eysenck.html
+  # Comme dans le livre de Howell, on va utiliser le dataset d'Eysenk (1994) 
+  # voir http://www.statsci.org/data/general/eysenck.html
 
-eysenck <- read.delim("http://www.statsci.org/data/general/eysenck.txt") # lu depuis les internettes
+eysenck <-
+  read.delim("http://www.statsci.org/data/general/eysenck.txt") # lu depuis les internettes
 head(eysenck)
 table(eysenck$Process) #5 stratégies, 20 individus dans chaque
 
@@ -80,9 +86,9 @@ mon.anova.1 <- aov(eysenck$Words ~ eysenck$Process)
   # varDépendante ~ varIndépendante (la var dépendante toujours à gauche)
 
 summary(mon.anova.1)
-# >           Df Sum Sq Mean Sq  F value  Pr(>F)    
-# > Process      4   1515   378.7    31.21  <2e-16 ***
-# > Residuals   95   1153    12.1                   
+  # >           Df Sum Sq Mean Sq  F value  Pr(>F)    
+  # > Process      4   1515   378.7    31.21  <2e-16 ***
+  # > Residuals   95   1153    12.1                   
 
 # Question: les groupes d'âges et les stratégies employées sont-ils équivalents?
 #           Y a-t-il une interaction entre la stratégie et l'âge?
@@ -93,12 +99,17 @@ summary(mon.anova.2)
 # Consigne: décrivez les résultats.
 
 # Bonus: production de boites à moustache
-plot(eysenck$Words ~ eysenck$Process,
-     main="Comparaison de stratégies de mémorisation",
-     xlab="Stratégies",
-     ylab="Nb de mots retenus")
+plot(
+  eysenck$Words ~ eysenck$Process,   # remarquez la notation en formule avec le tilde
+  main = "Comparaison de stratégies de mémorisation",  # titre
+  xlab = "Stratégies",  # étiquette pour l'axe de X
+  ylab = "Nb de mots retenus"  # étiquette pour l'axe des Y
+) 
 
-#---- Vérification et comparaison de deux ANOVA ----
+  # Note: on peut faire des boxplots encore plus élégants avec le package ggplot2
+  #       voir http://www.sthda.com/french/wiki/ggplot2-box-plot-guide-de-demarrage-rapide-logiciel-r-et-visualisation-de-donnees
+
+#---- 4. Vérification et comparaison de deux ANOVA ----
 #voir http://vislab-ccom.unh.edu/~schwehr/rt/25-R-lab3-ANOVA.pdf
 #on va utiliser le dataset "crabs" tiré du package MASS
 
@@ -133,13 +144,64 @@ shapiro.test(anova1$residuals)
 shapiro.test(anova2$residuals) 
 
 #comparaison des modèles
-compar.anova <- anova(anova1, anova2)
-compar.anova
+anova(anova1, anova2)  # méthode simple
 
-# À VOTRE TOUR ----:
+ma.compar.anova <- anova(anova1, anova2)  # on peut aussi placer le résultat dans une variable
+compar.anova
+summary(compar.anova)
+
+#---- 5. À VOTRE TOUR ----
 #   Pour le dataset gss_cat (inclus dans la librairie tidyverse),
 #   - produisez avec aov() deux modèles dont la variable dépendante sera tvhours,
 #   - comparez les deux modèles avec anova()
 #
 #   - Optionnel: Utilisez une approche exploratoire pour améliorer le modèle.
 #                Comparez les résultats avec vos camarades de classe.
+
+#    la solution plus bas!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#---- solution à l'exercice ANOVA ----
+
+  # il faut préalablement avoir le package tidyverse
+  # le mieux pour ce faire est d'utiliser l'installateur dans RStudio
+  #   Tools > Install package, on tape tidyverse et on clique Install
+
+library("tidyverse")
+head(gss_cat)  # pour voir les variables disponibles
+?gss_cat  # pour plus de détails sur ce jeu de données
+
+# production de deux modèles ANOVA
+modele_cat1 <- aov(data = gss_cat, tvhours ~ race)
+modele_cat2 <- aov(data = gss_cat, tvhours ~ rincome)
+
+# comparaison
+anova(modele_cat1, modele_cat2)
