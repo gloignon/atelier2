@@ -78,6 +78,9 @@ head(tbl.gss)
 #  - Calculez la MAD de tvhours par groupe, pour chaque statut marital
 #
 # Truc: pour la valeur absolue: abs()
+# Autre truc: ceci n'est qu'un exercice! Il existe déjà une fonction mad() qui fait exactement
+# ce que vous souhaitez. :D
+# Vous pouvez utiliser mad() pour contre-vérifier votre fonction personnalisée.
 
 
 
